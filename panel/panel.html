@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Axiom AutoTyper</title>
+  <link rel="stylesheet" href="panel.css">
+</head>
+<body>
+  <div class="panel-wrapper">
+    <!-- Header -->
+    <div class="panel-header">
+      <div class="header-left">
+        <div class="header-logo">🎓</div>
+        <div class="header-title">Axiom</div>
+      </div>
+      <div class="header-right">
+        <button class="header-icon-btn" id="profile-btn" title="Profile">👤</button>
+        <button class="header-icon-btn" id="chat-btn" title="Chat">💬</button>
+        <button class="header-icon-btn close-btn" id="close-btn" title="Close">✕</button>
+      </div>
+    </div>
+
+    <!-- Pro Mode Card -->
+    <div class="pro-card">
+      <div class="pro-header">
+        <span class="pro-badge">Pro Mode</span>
+        <input type="checkbox" id="pro-toggle" class="pro-toggle" disabled>
+      </div>
+      <div class="pro-subtitle">Humanized typing — 1 free session available</div>
+    </div>
+
+    <!-- Speed Control -->
+    <div class="control-section">
+      <div class="control-label">
+        <span>Speed</span>
+        <span class="speed-value" id="speed-value">1.00x</span>
+      </div>
+      <input type="range" id="speed-slider" min="0.5" max="3" step="0.1" value="1" class="slider">
+      <div class="slider-labels">
+        <span>0.5x</span>
+        <span>3x</span>
+      </div>
+    </div>
+
+    <!-- Skip Confirmation Toggle -->
+    <div class="toggle-row">
+      <label for="skip-confirmation">Skip start confirmation</label>
+      <input type="checkbox" id="skip-confirmation" class="toggle-switch">
+    </div>
+
+    <!-- Text Editor Section -->
+    <div class="text-section">
+      <div class="text-label">Text</div>
+      
+      <!-- Formatting Toolbar (non-functional in v1) -->
+      <div class="formatting-toolbar">
+        <button class="toolbar-btn" title="Paragraph" disabled>¶</button>
+        <button class="toolbar-btn" title="Heading 1" disabled>H1</button>
+        <button class="toolbar-btn" title="Heading 2" disabled>H2</button>
+        <button class="toolbar-btn" title="Heading 3" disabled>H3</button>
+        <button class="toolbar-btn" title="Bold" disabled><strong>B</strong></button>
+        <button class="toolbar-btn" title="Italic" disabled><em>I</em></button>
+        <button class="toolbar-btn" title="Underline" disabled><u>U</u></button>
+        <button class="toolbar-btn" title="Strikethrough" disabled><s>S</s></button>
+        <button class="toolbar-btn" title="Bullet List" disabled>•</button>
+        <button class="toolbar-btn" title="Numbered List" disabled>1.</button>
+      </div>
+
+      <!-- Text Area -->
+      <textarea id="text-input" placeholder="What would you like to type" class="text-input"></textarea>
+
+      <!-- Helper Text -->
+      <div class="helper-text">
+        Paste your text above. You can humanize the entire text or a portion by highlighting it. When it's ready, click Start Typing.
+      </div>
+    </div>
+
+    <!-- CTA Buttons -->
+    <div class="cta-buttons">
+      <button id="start-typing-btn" class="btn btn-primary">Start Typing</button>
+      <button id="humanize-btn" class="btn btn-secondary" disabled>Humanize</button>
+    </div>
+
+    <!-- Status Banners -->
+    <div class="status-banners">
+      <div class="status-banner banner-orange">
+        ⚠️ 1 free humanization left
+      </div>
+      <div class="status-banner banner-yellow">
+        ⭐ 1 free Pro session left
+      </div>
+    </div>
+
+    <!-- Advanced Settings -->
+    <div class="advanced-section">
+      <button id="advanced-btn" class="advanced-btn">
+        ⚙️ Advanced settings
+      </button>
+    </div>
+
+    <!-- Progress Bar (hidden by default) -->
+    <div id="progress-section" class="progress-section" style="display: none;">
+      <div class="progress-header">
+        <span id="progress-text">Typing...</span>
+        <button id="cancel-btn" class="btn-cancel">Cancel</button>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+      <div class="progress-info">
+        <span id="progress-chars">0</span> / <span id="progress-total">0</span> characters
+      </div>
+    </div>
+  </div>
+
+  <!-- Advanced Settings Modal (hidden by default) -->
+  <div id="advanced-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Advanced Settings</h2>
+        <button class="modal-close" id="modal-close-btn">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Preset Dropdown -->
+        <div class="setting-group">
+          <label for="preset-select">Preset</label>
+          <select id="preset-select" class="form-control">
+            <option>Beginner 12-16 Years Old</option>
+            <option>Intermediate 12-16 Years Old</option>
+            <option>Expert 12-16 Years Old</option>
+            <option>Beginner 17+ Years Old</option>
+            <option>Intermediate 17+ Years Old</option>
+            <option>Expert 17+ Years Old</option>
+            <option>Fast</option>
+            <option>Custom</option>
+          </select>
+          <div class="helper-text-small">
+            Pick a preset, or fine-tune values below and Save to lock in a Custom config.
+          </div>
+        </div>
+
+        <!-- WPM Input -->
+        <div class="setting-group">
+          <label for="wpm-input">Words per minute</label>
+          <input type="number" id="wpm-input" class="form-control" min="15" max="150" value="40">
+        </div>
+
+        <!-- Accuracy Slider -->
+        <div class="setting-group">
+          <label for="accuracy-slider">Accuracy</label>
+          <div class="slider-with-value">
+            <input type="range" id="accuracy-slider" class="slider" min="0" max="100" step="1" value="88">
+            <span class="value-display" id="accuracy-value">88%</span>
+          </div>
+        </div>
+
+        <!-- Correction Speed Input -->
+        <div class="setting-group">
+          <label for="correction-speed-input">Correction speed (seconds)</label>
+          <input type="number" id="correction-speed-input" class="form-control" min="0.1" max="10" step="0.1" value="1.0">
+        </div>
+
+        <!-- Break Frequency Slider -->
+        <div class="setting-group">
+          <label for="break-freq-slider">Break frequency</label>
+          <div class="slider-with-value">
+            <input type="range" id="break-freq-slider" class="slider" min="0" max="100" step="1" value="25">
+            <span class="value-display" id="break-freq-value">25%</span>
+          </div>
+        </div>
+
+        <!-- Break Durations -->
+        <div class="setting-group">
+          <label>Break durations (seconds)</label>
+          <div class="duration-inputs">
+            <div class="duration-input-group">
+              <label for="break-min-input">Min</label>
+              <input type="number" id="break-min-input" class="form-control form-control-small" min="0.1" max="10" step="0.1" value="1.0">
+            </div>
+            <div class="duration-input-group">
+              <label for="break-max-input">Max</label>
+              <input type="number" id="break-max-input" class="form-control form-control-small" min="0.1" max="10" step="0.1" value="2.0">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button id="modal-cancel-btn" class="btn btn-cancel">Cancel</button>
+        <button id="modal-save-btn" class="btn btn-primary">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirmation Modal (hidden by default) -->
+  <div id="confirm-modal" class="modal" style="display: none;">
+    <div class="modal-content confirm-modal-content">
+      <div class="confirm-text">
+        Click into your Google Doc, then return here within <span id="countdown">5</span> seconds. Typing will start automatically.
+      </div>
+      <div class="modal-footer">
+        <button id="confirm-cancel-btn" class="btn btn-cancel">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="panel.js"></script>
+</body>
+</html>

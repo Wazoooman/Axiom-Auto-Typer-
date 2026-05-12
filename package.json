@@ -1,0 +1,18 @@
+{
+  "name": "axiom-autotyper",
+  "version": "0.1.0",
+  "description": "Chrome extension that types text into Google Docs with humanized typing behavior",
+  "type": "module",
+  "scripts": {
+    "test": "node tests/typing-engine.test.js"
+  },
+  "keywords": [
+    "chrome-extension",
+    "google-docs",
+    "typing",
+    "humanization",
+    "automation"
+  ],
+  "author": "",
+  "license": "Unlicense"
+}
