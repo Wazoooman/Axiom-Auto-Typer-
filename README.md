@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Axiom AutoTyper
 
 A Chrome extension (Manifest V3) that types text into Google Docs with humanized typing behavior. The goal is to make version history look like a human wrote the document over time, not like it was pasted in.
@@ -290,3 +291,6 @@ Unlicensed (example/educational project). Use freely.
 **Status**: v1 Vertical Slice  
 **Last Updated**: May 2026  
 **Browser**: Chrome/Chromium (Manifest V3)
+=======
+# Axiom-Auto-Typer-
+>>>>>>> 0bd267731a0f4c256f07de4bd522871922106cca
