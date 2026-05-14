@@ -74,7 +74,7 @@ function actionToDebuggerParams(action) {
   };
 
   // Add text for keydown events with printable characters
-  if (action.type === 'keydown' && action.text && action.text !== ' ') {
+  if (action.type === 'keydown' && action.text) {
     baseParams.text = action.text;
   }
 
